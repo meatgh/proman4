@@ -11,21 +11,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SignupBusinessService {
 
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
-    private PasswordCryptographyProvider cryptographyProvider;
+    private UserAdminBusinessService userAdminBusinessService;
 
 
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity signup(UserEntity userEntity){
 
-        String[] encryptedText = cryptographyProvider.encrypt(userEntity.getPassword());
-        userEntity.setSalt(encryptedText[0]);
-        userEntity.setPassword(encryptedText[1]);
+//        removed in the authorizationi video section for code centralization;
+//        String[] encryptedText = cryptographyProvider.encrypt(userEntity.getPassword());
+//        userEntity.setSalt(encryptedText[0]);
+//        userEntity.setPassword(encryptedText[1]);
 
-        return userDao.createUser(userEntity);
+        return userAdminBusinessService.createUser(userEntity);
+
+//        return userDao.createUser(userEntity);
     }
 
 
